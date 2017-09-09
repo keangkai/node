@@ -84,7 +84,7 @@ inline void BaseObject::MakeWeak(Type* ptr) {
                                    v8::WeakCallbackType::kParameter);
 }
 
-
+//use inline
 inline void BaseObject::ClearWeak() {
   persistent_handle_.ClearWeak();
 }
