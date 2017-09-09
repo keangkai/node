@@ -36,15 +36,15 @@ void Environment::Start(int argc,
 
   uv_idle_init(event_loop(), immediate_idle_handle());
 
-  // Inform V8's CPU profiler when we're idle.  The profiler is sampling-based
-  // but not all samples are created equal; mark the wall clock time spent in
-  // epoll_wait() and friends so profiling tools can filter it out.  The samples
-  // still end up in v8.log but with state=IDLE rather than state=EXTERNAL.
-  // TODO(bnoordhuis) Depends on a libuv implementation detail that we should
-  // probably fortify in the API contract, namely that the last started prepare
-  // or check watcher runs first.  It's not 100% foolproof; if an add-on starts
-  // a prepare or check watcher after us, any samples attributed to its callback
-  // will be recorded with state=IDLE.
+  /* Inform V8's CPU profiler when we're idle.  The profiler is sampling-based
+     but not all samples are created equal; mark the wall clock time spent in
+     epoll_wait() and friends so profiling tools can filter it out.  The samples
+     still end up in v8.log but with state=IDLE rather than state=EXTERNAL.
+     TODO(bnoordhuis) Depends on a libuv implementation detail that we should
+     probably fortify in the API contract, namely that the last started prepare
+     or check watcher runs first.  It's not 100% foolproof; if an add-on starts
+     a prepare or check watcher after us, any samples attributed to its callback
+     will be recorded with state=IDLE.  */
   uv_prepare_init(event_loop(), &idle_prepare_handle_);
   uv_check_init(event_loop(), &idle_check_handle_);
   uv_unref(reinterpret_cast<uv_handle_t*>(&idle_prepare_handle_));
