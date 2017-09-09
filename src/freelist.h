@@ -29,6 +29,7 @@ class Freelist {
     }
   }
 
+ //this method will compare
   void push(T* item) {
     if (size_ > kMaximumLength) {
       FreelistTraits::Free(item);
